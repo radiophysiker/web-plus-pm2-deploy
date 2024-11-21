@@ -14,11 +14,11 @@ module.exports = {
     production: {
       user: DEPLOY_USER,
       host: DEPLOY_HOST,
-      ref: 'origin/master',
+      ref: DEPLOY_REF,
       repo: 'https://github.com/radiophysiker/web-plus-pm2-deploy.git',
-      path: DEPLOY_REF,
-      'pre-deploy-local': `scp .env.production ${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PATH}/source/backend`,
-      'post-deploy': 'cd backend && npm i && npm run build && pm2 reload ecosystem.config.js --env production',
+      path: DEPLOY_PATH,
+      'pre-deploy-local': `scp .env.production ${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PATH}/current/backend`,
+      'post-deploy': 'export PATH=$PATH:~/.nvm/versions/node/v22.11.0/bin && cd backend && npm i && npm run build && pm2 reload ecosystem.config.js --env production',
     },
   },
 };
