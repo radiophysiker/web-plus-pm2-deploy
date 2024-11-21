@@ -20,10 +20,11 @@ module.exports = {
     production: {
       user: DEPLOY_USER,
       host: DEPLOY_HOST,
-      ref: DEPLOY_REF,
-      repo: 'git@github.com:radiophysiker/nodejs-pm2-deploy.git',
+      ref: 'origin/master',
+      repo: 'git@github.com:radiophysiker/web-plus-pm2-deploy.git',
       path: DEPLOY_PATH,
-      'post-deploy': 'npm i && pm2 reload ecosystem.config.js --env production && npm run build',
+      'pre-deploy': `scp ./*.env ${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PATH}`,
+      'post-deploy': 'cd backend && npm i && npm run build && pm2 reload ecosystem.config.js --env production',
     },
   },
 };
