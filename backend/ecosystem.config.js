@@ -7,18 +7,12 @@ const {
 module.exports = {
   apps: [{
     name: 'api-service',
-    script: './dist/index.js',
+    script: './dist/app.js',
     env_env_production: {
       NODE_ENV: 'production',
       DATABASE_HOST,
       DATABASE_USER,
       DATABASE_PASSWORD,
-    },
-    env_development: {
-      NODE_ENV: 'development',
-      DATABASE_HOST: 'localhost',
-      DATABASE_USER: 'test-user',
-      DATABASE_PASSWORD: 'test-user-password',
     },
   }],
 
@@ -29,8 +23,7 @@ module.exports = {
       ref: DEPLOY_REF,
       repo: 'git@github.com:radiophysiker/nodejs-pm2-deploy.git',
       path: DEPLOY_PATH,
-      'pre-deploy': `scp ./*.env ${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PATH}`,
-      'post-deploy': 'npm i && npm run build',
+      'post-deploy': 'npm i && pm2 reload ecosystem.config.js --env production && npm run build',
     },
   },
 };
