@@ -21,7 +21,7 @@ module.exports = {
       user: DEPLOY_USER,
       host: DEPLOY_HOST,
       ref: 'origin/master',
-      repo: 'git@github.com:radiophysiker/web-plus-pm2-deploy.git',
+      repo: 'https://github.com/radiophysiker/web-plus-pm2-deploy.git',
       path: DEPLOY_PATH,
       'pre-deploy': `scp ./*.env ${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PATH}`,
       'post-deploy': 'cd backend && npm i && npm run build && pm2 reload ecosystem.config.js --env production',
